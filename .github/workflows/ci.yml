@@ -1,0 +1,39 @@
+name: Run CI checks
+
+on:
+  - push
+  - workflow_call
+
+env:
+  CI_UV_VERSION: "0.7.12"
+
+jobs:
+  ci-checks:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out source tree
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: ${{ env.CI_UV_VERSION }}
+
+      - name: Print current package version
+        run: uv tree -d 0
+
+      - name: Run static typechecking
+        run: uv run poe typecheck
+
+      - name: Run linter
+        run: uv run poe linter
+
+      - name: Check for formatting style violations not covered by the linter
+        run: uv run poe formatcheck
+
+      - name: Run unit tests
+        run: uv run poe tests
+
+      - name: Run man page and HTML documentation generator
+        run: uv run poe doc

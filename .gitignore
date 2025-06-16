@@ -1,0 +1,9 @@
+/build/
+/dist/
+/doc/sphinx/autoapi/
+/.venv/
+*.egg-info
+*.log
+.pybuild
+.pytest_cache
+__pycache__

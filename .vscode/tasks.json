@@ -1,0 +1,53 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "snekuity: Install/update local dependencies",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "update"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "clear": true,
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "snekuity: Browse HTML documentation",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "run",
+        "poe",
+        "html"
+      ],
+      "problemMatcher": [],
+      "group": "build",
+      "presentation": {
+        "clear": true,
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "snekuity: Run static type checker",
+      "type": "process",
+      "command": "uv",
+      "args": [
+        "run",
+        "poe",
+        "typecheck"
+      ],
+      "problemMatcher": [],
+      "group": "test",
+      "presentation": {
+        "clear": true,
+        "showReuseMessage": false
+      }
+    }
+  ]
+}

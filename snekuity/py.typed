@@ -1,0 +1,4 @@
+# Marker file to declare that this package supports type checking.
+#
+# See also:
+# https://typing.python.org/en/latest/spec/distributing.html#packaging-typed-libraries
