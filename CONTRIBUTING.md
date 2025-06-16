@@ -145,3 +145,19 @@ To update the `doc/requirements.txt` file for Read the Docs, run:
 ```shell
 uv export --only-group doc --output-file doc/requirements.txt
 ```
+
+### Rebuild `python-snekuity-local` for Arch Linux packaging tests
+
+From a clean Git working tree, run:
+
+```bash
+(
+  set -ex
+  git add -p -- contrib/archlinux/python-snekuity-local/PKGBUILD
+  rm -fv contrib/archlinux/python-snekuity-local/*.tar.zst
+  env -C contrib/archlinux/python-snekuity-local makepkg -cfs
+  git checkout -- contrib/archlinux/python-snekuity-local/PKGBUILD
+  namcap contrib/archlinux/python-snekuity-local/PKGBUILD
+  sudo pacman -U contrib/archlinux/python-snekuity-local/*.tar.zst
+)
+```

@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "claui.packaging",
     "editorconfig.editorconfig",
     "ms-python.black-formatter",
     "ms-python.mypy-type-checker",

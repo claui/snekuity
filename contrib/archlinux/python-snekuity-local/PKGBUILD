@@ -1,0 +1,74 @@
+# Maintainer: Claudia Pellegrino <clau@tiqua.de>
+
+pkgname=python-snekuity-git
+pkgver=0.1.0.r2.2fcbd94
+pkgrel=1
+pkgdesc='Pythonic API for GnuCash'
+arch=('any')
+url='https://github.com/claui/snekuity'
+license=('Apache-2.0')
+depends=(
+  'gnucash'
+  'python-pyxdg'
+)
+makedepends=(
+  'git'
+  'python-build'
+  'python-hatch'
+  'python-installer'
+  'python-myst-parser'
+  'python-sphinx'
+  'python-sphinx-autoapi'
+  'python-sphinx_rtd_theme'
+  'python-wheel'
+)
+checkdepends=('python-pytest')
+provides=('python-snekuity')
+conflicts=('python-snekuity')
+options=('!strip')
+source=("git+file://$(git rev-parse --show-toplevel)")
+sha512sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/snekuity"
+  printf "%s.r%s.%s" \
+    "$(hatch version)" \
+    "$(git rev-list --count HEAD)" \
+    "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "${srcdir}/snekuity"
+  echo >&2 'Building wheel'
+  python -m build --wheel --no-isolation
+
+  echo >&2 'Generating man page'
+  sphinx-build -aqEW -b man doc/sphinx build/man
+
+  echo >&2 'Generating HTML documentation'
+  sphinx-build -aqEW -b singlehtml doc/sphinx build/singlehtml
+}
+
+check() {
+  cd "${srcdir}/snekuity"
+  python -m pytest
+}
+
+package() {
+  cd "${srcdir}/snekuity"
+
+  echo >&2 'Packaging the wheel'
+  python -I -m installer --destdir="${pkgdir}" dist/*.whl
+
+  echo >&2 'Packaging the documentation'
+  install -D -m 644 -t "${pkgdir}/usr/share/doc/${pkgname}" \
+    'README.md' 'USAGE.md'
+  install -D -m 644 -t "${pkgdir}/usr/share/man/man3" \
+    build/man/*.3
+  cp -R --preserve=mode -t "${pkgdir}/usr/share/doc/${pkgname}" \
+    build/singlehtml/{index.html,_static}
+
+  echo >&2 'Packaging the license'
+  install -D -m 644 -t "${pkgdir}/usr/share/licenses/${pkgname}" \
+    'LICENSE'
+}
