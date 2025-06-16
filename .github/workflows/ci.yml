@@ -17,8 +17,7 @@ jobs:
 
       - name: Install system package dependencies
         run: |
-          sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3-gnucash
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yU python3-gnucash
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
