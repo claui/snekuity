@@ -18,7 +18,7 @@ jobs:
       - name: Install system package dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive \
-            apt-get install -yU locales python3-gnucash
+            apt-get install -yU gnucash locales python3-gnucash
           printf '%s %s\n' 'en_US.UTF-8' 'UTF-8' 'de_DE.UTF-8' 'UTF-8' \
             | sudo tee /etc/locale.gen
           sudo /usr/sbin/locale-gen
