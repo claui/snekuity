@@ -15,10 +15,18 @@ jobs:
       - name: Check out source tree
         uses: actions/checkout@v4
 
+      - name: Install system package dependencies
+        run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3-gnucash
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           version: ${{ env.CI_UV_VERSION }}
+
+      - name: Set up virtual environment
+        run: uv venv --no-managed-python --system-site-packages -p /usr/bin/python3
 
       - name: Print current package version
         run: uv tree -d 0
