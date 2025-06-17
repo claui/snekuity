@@ -1,5 +1,7 @@
 # snekuity
 
+![Illustration of a cute, cheerful snek carrying a ledger in its mouth](./share/icon/snek-512x512.png)
+
 snekuity (pronounced like “equity”) is a Pythonic API for interacting
 with GnuCash.
 
