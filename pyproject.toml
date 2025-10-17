@@ -17,7 +17,13 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = ["autopep8", "mypy", "poethepoet", "pylint", "ruff"]
-doc = ["myst-parser", "sphinx", "sphinx-autoapi", "sphinx-rtd-theme"]
+doc = [
+    "myst-parser",
+    "sphinx",
+    # https://github.com/readthedocs/sphinx-autoapi/issues/536
+    "sphinx-autoapi>=3.6.1",
+    "sphinx-rtd-theme",
+]
 test = ["pytest"]
 
 [project.urls]
